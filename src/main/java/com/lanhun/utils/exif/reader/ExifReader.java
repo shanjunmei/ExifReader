@@ -71,7 +71,7 @@ public class ExifReader {
                 " `focal_length`, `exposure_bias`, `width`, `height`, `x_resolution`, `y_resolution`, `sensitivity`, `file_path`, `file_name`) VALUES " +
                 "( '"+exifInfo.getMake()+"', '"+exifInfo.getModel()+"', '"+sdf.format(exifInfo.getShootTime())+"', '"+exifInfo.getAperture()+"', '"+exifInfo.getShutterSpeed()+"'" +
                 ", '"+exifInfo.getFocalLength()+"', '"+exifInfo.getExposureBias()+"', '"+exifInfo.getWidth()+"', '"+exifInfo.getHeight()+"'" +
-                ", '"+exifInfo.getxResolution()+"', '"+exifInfo.getyResolution()+"', '"+exifInfo.getSensitivity()+"', '"+exifInfo.getFilePath()+"', '"+exifInfo.getFileName()+"');";
+                ", '"+exifInfo.getxResolution()+"', '"+exifInfo.getyResolution()+"', '"+exifInfo.getSensitivity()+"', '"+exifInfo.getFilePath().replace("\\","\\\\")+"', '"+exifInfo.getFileName()+"');";
         System.out.println(sql);
         return exifInfo;
     }
