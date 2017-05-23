@@ -4,6 +4,8 @@ import com.lanhun.utils.exif.model.ExifInfo;
 import com.lanhun.utils.exif.reader.ExifReader;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 /**
  * Hello world!
@@ -11,16 +13,21 @@ import java.io.File;
 public class App {
 
     public static void main(String[] args) throws Exception {
+        String path="G:\\photos.sql";
+        FileOutputStream fos=new FileOutputStream(path);
+        PrintStream ps=new PrintStream(fos);
+        System.setOut(ps);
 
-        File dir = new File("G:\\100CANON");
+        System.out.println("start TRANSACTION; ");
+        File dir = new File("G:\\照片");
 
         list(dir);
-
+        System.out.println("commit; ");
         File jpegFile = new File("G:\\100CANON\\IMG_0234.JPG");
 
 
-        ExifInfo info = ExifReader.getExifInfo(jpegFile);
-        System.out.println(info);
+       /* ExifInfo info = ExifReader.getExifInfo(jpegFile);
+        System.out.println(info);*/
     }
 
     public static void list(File file) {

@@ -8,11 +8,14 @@ import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.lanhun.utils.exif.model.ExifInfo;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Administrator on 2017/5/23.
  */
 public class ExifReader {
+
+    private final  static SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     public static ExifInfo getExifInfo(File file) {
         ExifInfo exifInfo = null;
@@ -35,7 +38,7 @@ public class ExifReader {
                     exifInfo.setExposureBias(directory.getString(ExifSubIFDDirectory.TAG_EXPOSURE_BIAS));
 
                     //光圈F值=镜头的焦距/镜头光圈的直径
-                    System.out.println("光圈值: f/" + directory.getString(ExifSubIFDDirectory.TAG_FNUMBER));
+                  /*  System.out.println("光圈值: f/" + directory.getString(ExifSubIFDDirectory.TAG_FNUMBER));
 
                     System.out.println("曝光时间: " + directory.getString(ExifSubIFDDirectory.TAG_EXPOSURE_TIME) + "秒");
                     System.out.println("ISO速度: " + directory.getString(ExifSubIFDDirectory.TAG_ISO_EQUIVALENT));
@@ -43,7 +46,7 @@ public class ExifReader {
 
                     System.out.println("拍照时间: " + directory.getString(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL));
                     System.out.println("宽: " + directory.getString(ExifSubIFDDirectory.TAG_EXIF_IMAGE_WIDTH));
-                    System.out.println("高: " + directory.getString(ExifSubIFDDirectory.TAG_EXIF_IMAGE_HEIGHT));
+                    System.out.println("高: " + directory.getString(ExifSubIFDDirectory.TAG_EXIF_IMAGE_HEIGHT));*/
 
                 }
 
@@ -52,11 +55,11 @@ public class ExifReader {
                     exifInfo.setModel(directory.getString(ExifIFD0Directory.TAG_MODEL));
                     exifInfo.setxResolution(directory.getInteger(ExifIFD0Directory.TAG_X_RESOLUTION));
                     exifInfo.setyResolution(directory.getInteger(ExifIFD0Directory.TAG_Y_RESOLUTION));
-
+/*
                     System.out.println("照相机制造商: " + directory.getString(ExifIFD0Directory.TAG_MAKE));
                     System.out.println("照相机型号: " + directory.getString(ExifIFD0Directory.TAG_MODEL));
                     System.out.println("水平分辨率: " + directory.getString(ExifIFD0Directory.TAG_X_RESOLUTION));
-                    System.out.println("垂直分辨率: " + directory.getString(ExifIFD0Directory.TAG_Y_RESOLUTION));
+                    System.out.println("垂直分辨率: " + directory.getString(ExifIFD0Directory.TAG_Y_RESOLUTION));*/
                 }
             }
 
@@ -64,6 +67,12 @@ public class ExifReader {
         } catch (Exception e) {
             //IGNORE
         }
+        String sql = "INSERT INTO `exif`.`exif` (`make`, `model`, `shoot_time`, `aperture`, `shutter_speed`," +
+                " `focal_length`, `exposure_bias`, `width`, `height`, `x_resolution`, `y_resolution`, `sensitivity`, `file_path`, `file_name`) VALUES " +
+                "( '"+exifInfo.getMake()+"', '"+exifInfo.getModel()+"', '"+sdf.format(exifInfo.getShootTime())+"', '"+exifInfo.getAperture()+"', '"+exifInfo.getShutterSpeed()+"'" +
+                ", '"+exifInfo.getFocalLength()+"', '"+exifInfo.getExposureBias()+"', '"+exifInfo.getWidth()+"', '"+exifInfo.getHeight()+"'" +
+                ", '"+exifInfo.getxResolution()+"', '"+exifInfo.getyResolution()+"', '"+exifInfo.getSensitivity()+"', '"+exifInfo.getFilePath()+"', '"+exifInfo.getFileName()+"');";
+        System.out.println(sql);
         return exifInfo;
     }
 }
