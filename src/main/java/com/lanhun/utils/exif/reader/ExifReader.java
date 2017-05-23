@@ -21,8 +21,7 @@ public class ExifReader {
             exifInfo = new ExifInfo();
             exifInfo.setFilePath(file.getParent());
             exifInfo.setFileName(file.getName());
-            System.out.println(file.getParent());
-            System.out.println(file.getName());
+
             for (Directory directory : metadata.getDirectories()) {
 
                 if ("ExifSubIFDDirectory".equalsIgnoreCase(directory.getClass().getSimpleName())) {
