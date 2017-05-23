@@ -35,7 +35,7 @@ public class App {
             if (fileName.endsWith(".jpg")) {
                 ExifInfo info = ExifReader.getExifInfo(file);
             }
-            System.out.println(file.getAbsolutePath());
+
         }
     }
 
