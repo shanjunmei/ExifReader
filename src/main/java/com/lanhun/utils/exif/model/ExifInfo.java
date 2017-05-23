@@ -72,6 +72,11 @@ public class ExifInfo {
      */
     private String fileName;
 
+    /**
+     * 文件大小
+     */
+    private Long size;
+
     public String getMake() {
         return make;
     }
@@ -184,6 +189,14 @@ public class ExifInfo {
         this.fileName = fileName;
     }
 
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
     public String toString() {
         return "ExifInfo{" +
                 "make='" + make + '\'' +
@@ -200,6 +213,7 @@ public class ExifInfo {
                 ", sensitivity='" + sensitivity + '\'' +
                 ", filePath='" + filePath + '\'' +
                 ", fileName='" + fileName + '\'' +
+                ", size=" + size +
                 '}';
     }
 }

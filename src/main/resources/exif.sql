@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2017-05-23 14:25:12
+Date: 2017-05-23 14:51:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,5 +35,6 @@ CREATE TABLE `exif` (
   `sensitivity` varchar(20) DEFAULT NULL COMMENT '感光度',
   `file_path` varchar(1000) DEFAULT NULL COMMENT '文件路径',
   `file_name` varchar(1000) DEFAULT NULL COMMENT '文件名',
+  `size` bigint(20) DEFAULT NULL COMMENT '文件大小',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1386 DEFAULT CHARSET=utf8;

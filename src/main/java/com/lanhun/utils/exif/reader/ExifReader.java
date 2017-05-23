@@ -24,6 +24,7 @@ public class ExifReader {
             exifInfo = new ExifInfo();
             exifInfo.setFilePath(file.getParent());
             exifInfo.setFileName(file.getName());
+            exifInfo.setSize(file.length());
 
             for (Directory directory : metadata.getDirectories()) {
 
@@ -68,10 +69,10 @@ public class ExifReader {
             //IGNORE
         }
         String sql = "INSERT INTO `exif`.`exif` (`make`, `model`, `shoot_time`, `aperture`, `shutter_speed`," +
-                " `focal_length`, `exposure_bias`, `width`, `height`, `x_resolution`, `y_resolution`, `sensitivity`, `file_path`, `file_name`) VALUES " +
+                " `focal_length`, `exposure_bias`, `width`, `height`, `x_resolution`, `y_resolution`, `sensitivity`, `file_path`, `file_name`, `size`) VALUES " +
                 "( '"+exifInfo.getMake()+"', '"+exifInfo.getModel()+"', '"+sdf.format(exifInfo.getShootTime())+"', '"+exifInfo.getAperture()+"', '"+exifInfo.getShutterSpeed()+"'" +
                 ", '"+exifInfo.getFocalLength()+"', '"+exifInfo.getExposureBias()+"', '"+exifInfo.getWidth()+"', '"+exifInfo.getHeight()+"'" +
-                ", '"+exifInfo.getxResolution()+"', '"+exifInfo.getyResolution()+"', '"+exifInfo.getSensitivity()+"', '"+exifInfo.getFilePath().replace("\\","\\\\")+"', '"+exifInfo.getFileName()+"');";
+                ", '"+exifInfo.getxResolution()+"', '"+exifInfo.getyResolution()+"', '"+exifInfo.getSensitivity()+"', '"+exifInfo.getFilePath().replace("\\","\\\\")+"', '"+exifInfo.getFileName()+"', '"+exifInfo.getSize()+"');";
         System.out.println(sql);
         return exifInfo;
     }
