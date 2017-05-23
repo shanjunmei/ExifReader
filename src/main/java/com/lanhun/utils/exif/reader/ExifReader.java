@@ -32,6 +32,7 @@ public class ExifReader {
                     exifInfo.setShootTime(directory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL));
                     exifInfo.setWidth(directory.getInteger(ExifSubIFDDirectory.TAG_EXIF_IMAGE_WIDTH));
                     exifInfo.setHeight(directory.getInteger(ExifSubIFDDirectory.TAG_EXIF_IMAGE_HEIGHT));
+                    exifInfo.setExposureBias(directory.getString(ExifSubIFDDirectory.TAG_EXPOSURE_BIAS));
 
                     //光圈F值=镜头的焦距/镜头光圈的直径
                     System.out.println("光圈值: f/" + directory.getString(ExifSubIFDDirectory.TAG_FNUMBER));
