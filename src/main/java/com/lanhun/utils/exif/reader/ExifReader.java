@@ -15,17 +15,18 @@ import java.text.SimpleDateFormat;
  */
 public class ExifReader {
 
-    private final  static SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     public static ExifInfo getExifInfo(File file) {
         ExifInfo exifInfo = null;
         try {
-            Metadata metadata = JpegMetadataReader.readMetadata(file);
+
             exifInfo = new ExifInfo();
             exifInfo.setFilePath(file.getParent());
             exifInfo.setFileName(file.getName());
             exifInfo.setSize(file.length());
 
+            Metadata metadata = JpegMetadataReader.readMetadata(file);
             for (Directory directory : metadata.getDirectories()) {
 
                 if ("ExifSubIFDDirectory".equalsIgnoreCase(directory.getClass().getSimpleName())) {
@@ -66,14 +67,24 @@ public class ExifReader {
 
 
         } catch (Exception e) {
+
             //IGNORE
         }
-        String sql = "INSERT INTO `exif`.`exif` (`make`, `model`, `shoot_time`, `aperture`, `shutter_speed`," +
-                " `focal_length`, `exposure_bias`, `width`, `height`, `x_resolution`, `y_resolution`, `sensitivity`, `file_path`, `file_name`, `size`) VALUES " +
-                "( '"+exifInfo.getMake()+"', '"+exifInfo.getModel()+"', '"+sdf.format(exifInfo.getShootTime())+"', '"+exifInfo.getAperture()+"', '"+exifInfo.getShutterSpeed()+"'" +
-                ", '"+exifInfo.getFocalLength()+"', '"+exifInfo.getExposureBias()+"', '"+exifInfo.getWidth()+"', '"+exifInfo.getHeight()+"'" +
-                ", '"+exifInfo.getxResolution()+"', '"+exifInfo.getyResolution()+"', '"+exifInfo.getSensitivity()+"', '"+exifInfo.getFilePath().replace("\\","\\\\")+"', '"+exifInfo.getFileName()+"', '"+exifInfo.getSize()+"');";
-        System.out.println(sql);
+        if (exifInfo != null) {
+            String sql = "INSERT INTO `exif`.`exif` (`make`, `model`, `shoot_time`, `aperture`, `shutter_speed`," +
+                    " `focal_length`, `exposure_bias`, `width`, `height`, `x_resolution`, `y_resolution`, `sensitivity`, `file_path`, `file_name`, `size`) VALUES " +
+                    "( " + getString(exifInfo.getMake()) + ", " + getString(exifInfo.getModel()) + ", " + getString(exifInfo.getShootTime() == null ? null : sdf.format(exifInfo.getShootTime())) + ", " + getString(exifInfo.getAperture()) + ", " + getString(exifInfo.getShutterSpeed()) + "" +
+                    ", " +getString( exifInfo.getFocalLength()) + ", " + getString(exifInfo.getExposureBias()) + ", " +getString( exifInfo.getWidth()) + ", " +getString( exifInfo.getHeight()) + "" +
+                    ", " + getString(exifInfo.getxResolution()) + ", " + getString(exifInfo.getyResolution()) + ", " + getString(exifInfo.getSensitivity()) + ", " +getString (exifInfo.getFilePath() == null ? null : exifInfo.getFilePath().replace("\\", "\\\\")) + ", " + getString(exifInfo.getFileName()) + ", " + getString(exifInfo.getSize()) + ");";
+            System.out.println(sql);
+        }
         return exifInfo;
+    }
+
+    private static String getString(Object i) {
+        if(i!=null){
+            i="'"+i+"'";
+        }
+        return (String)i;
     }
 }
